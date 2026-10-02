@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PVL – Lurigancho</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--tx:#1b2430;--mu:#6b7686;--bl:#0b4a85;--az:#1e90ff;--bd:#dfe3ea;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14181f;--card:#1d232d;--tx:#e8ecf2;--mu:#98a3b3;--bd:#2d3644}}
+:root[data-theme="dark"]{--bg:#14181f;--card:#1d232d;--tx:#e8ecf2;--mu:#98a3b3;--bd:#2d3644}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--bl);color:#fff;text-align:center;padding:14px 10px;font-size:22px;font-weight:800;letter-spacing:.5px}
+nav{display:flex;gap:8px;padding:10px 14px;background:var(--card);border-bottom:1px solid var(--bd)}
+nav button{border:1px solid var(--bd);background:var(--bg);color:var(--tx);padding:9px 18px;border-radius:8px;font-weight:600;cursor:pointer}
+nav button.on{background:var(--bl);color:#fff;border-color:var(--bl)}
+main{padding:14px;max-width:1300px;margin:auto}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px}
+.hide{display:none!important}
+.up{text-align:center;padding:40px 16px}
+.btn{background:var(--az);color:#fff;border:0;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
+.btn.g{background:#2e9b5b}.btn.s{background:var(--mu)}
+.drop{border:2px dashed var(--bd);border-radius:12px;padding:34px;margin:14px auto;max-width:520px}
+.drop.dz{border-color:var(--az)}
+#st{color:var(--mu);margin-top:8px;font-size:14px}
+.hero{background:linear-gradient(135deg,#0b4a85,#1e90ff);color:#fff;border:0;margin-bottom:12px}
+.hero h2{margin:0 0 4px;font-size:20px}.hero p{margin:0 0 10px;opacity:.9;font-size:13px}
+.sb{position:relative}.sb input{width:100%;padding:13px 14px;font-size:16px;border-radius:8px;border:0;color:#1b2430}
+.sg{position:absolute;left:0;right:0;top:100%;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:8px;max-height:300px;overflow:auto;z-index:20;margin-top:4px;box-shadow:0 8px 24px #0004}
+.sg div{padding:9px 12px;cursor:pointer;display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.sg div:hover{background:var(--bg)}.sg small{color:var(--mu);white-space:nowrap}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:12px}
+.kp{grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px}
+.k{position:relative;overflow:hidden;border-radius:12px;padding:9px 10px;color:#fff;text-align:left;box-shadow:0 4px 12px #0002;transition:transform .2s}
+.k:hover{transform:translateY(-3px)}
+.k i{position:absolute;right:6px;top:2px;font-size:26px;opacity:.3;font-style:normal}
+.k b{display:block;font-size:22px;line-height:1.1}.k span{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.k u{display:block;height:3px;background:#fff4;border-radius:2px;margin-top:6px}.k u s{display:block;height:100%;background:#fff;border-radius:2px}
+.k.com{grid-column:span 2;box-shadow:0 0 0 3px #fff,0 0 0 6px #7b2fd4,0 8px 20px #7b2fd466}.k.com b{font-size:34px}
+header{background:linear-gradient(90deg,#0b4a85,#1e90ff 60%,#0b4a85)}
+.wide{grid-column:1/-1}
+.mos{display:flex;flex-wrap:wrap;gap:4px}.mos div{flex:var(--w) 1 0;min-width:92px;min-height:54px;background:hsl(var(--h) 65% 42%);color:#fff;border-radius:6px;padding:6px 8px;font-size:10px;cursor:pointer;transition:transform .15s}
+.mos div:hover{transform:scale(1.05);z-index:2;box-shadow:0 4px 14px #0005}.mos b{display:block;font-size:15px}
+.hm{border-collapse:separate;border-spacing:3px}.hm td{text-align:center;border-radius:5px;font-weight:700;padding:10px 6px;border:0}
+.filt{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.filt label{font-size:11px;color:var(--mu);display:flex;flex-direction:column;gap:2px;font-weight:600}
+.filt select{padding:6px;border-radius:6px;border:1px solid var(--bd);background:var(--card);color:var(--tx);min-width:130px}
+.gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px}
+.gr h3{margin:-14px -14px 12px;background:var(--bl);color:#fff;padding:8px;text-align:center;font-size:14px;border-radius:10px 10px 0 0}
+.br{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:12px}
+.br .l{width:120px;text-align:right;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.br .t{flex:1;background:var(--bg);height:14px;border-radius:3px}.br .f{background:var(--az);height:100%;border-radius:3px}
+.br .v{width:48px;flex:none}.br.cl{cursor:pointer}.br.cl:hover .l{color:var(--az);font-weight:700}
+.col{display:flex;align-items:flex-end;gap:10px;height:200px;padding-top:10px}
+.col div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:11px}
+.col i{display:block;width:100%;background:var(--az);border-radius:3px 3px 0 0}
+.don{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+.ring{width:180px;height:180px;border-radius:50%;display:grid;place-items:center}
+.ring span{background:var(--card);width:110px;height:110px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:20px;text-align:center}
+.lg div{font-size:13px;margin:4px 0}.lg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+#mo{position:fixed;inset:0;background:#000a;z-index:50;display:flex;align-items:center;justify-content:center;padding:12px}
+.md{background:var(--card);border-radius:12px;width:100%;max-width:900px;max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+.mh{padding:14px;border-bottom:1px solid var(--bd)}.mh h3{margin:0 0 8px;font-size:16px;color:var(--bl)}
+.mt{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.mt input,.mt select{padding:8px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx)}
+.tw{overflow:auto;flex:1}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{position:sticky;top:0;background:var(--bl);color:#fff;padding:8px;text-align:left}
+td{padding:6px 8px;border-bottom:1px solid var(--bd)}
+tr.sel td{background:#1e90ff22}
+body{font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:14px}
+header{font-size:17px;padding:12px;letter-spacing:.8px;font-weight:700}
+.app{display:flex;min-height:100vh}.cn{flex:1;min-width:0}
+nav{flex-direction:column;width:210px;flex:none;border-bottom:0;border-right:0;padding:18px 12px;gap:6px;position:sticky;top:0;height:100vh;background:linear-gradient(180deg,#0a2540,#0b4a85)}
+.logo{color:#fff;font-size:22px;font-weight:800;padding:4px 8px 16px;border-bottom:1px solid #ffffff2a;margin-bottom:10px}.logo small{display:block;font-size:10px;font-weight:600;opacity:.7;letter-spacing:.4px;margin-top:2px}
+nav button{background:transparent;color:#cfe2ff;border:0;text-align:left;padding:11px 14px;font-size:14px;font-family:inherit}
+nav button:hover{background:#ffffff18}
+nav button.on{background:#1e90ff;color:#fff;box-shadow:0 4px 12px #1e90ff66}
+.hero{display:flex;align-items:center;gap:14px;padding:8px 14px;background:linear-gradient(120deg,#1e1b4b,#4f46e5);border-radius:12px;box-shadow:0 4px 14px #4f46e555}
+.hero h2{margin:0;font-size:14px;white-space:nowrap;font-weight:700}
+.hero .sb{flex:1}.sb input{padding:8px 12px;font-size:14px;border-radius:8px;font-family:inherit}
+.gr h3{font-size:13px;letter-spacing:.3px}
+@media(max-width:720px){.app{flex-direction:column}nav{width:auto;height:auto;flex-direction:row;position:static;padding:8px;overflow-x:auto}.logo{display:none}.hero{flex-wrap:wrap}}
+</style></head><body>
+<div class="app"><nav><div class="logo">🥛 PVL<small>Municipalidad de Lurigancho</small></div><button id="b1" class="on" onclick="tab(1)">📁 Cargar Excel</button><button id="b2" onclick="tab(2)">📊 Dashboard</button></nav><div class="cn"><header>PROGRAMA DE VASO DE LECHE (PVL) – LURIGANCHO</header>
+<main>
+<section id="p1"><div class="card up">
+<h2 style="margin-top:0">Cargar padrón de beneficiarios</h2>
+<div class="drop" id="dz"><p>Arrastra aquí el Excel (.xlsx) o</p>
+<button class="btn" onclick="fi.click()">Seleccionar archivo</button>
+<input type="file" id="fi" accept=".xlsx,.xls" class="hide"></div>
+<div id="st">Aún no se ha cargado ningún archivo.</div></div></section>
+
+<section id="p2" class="hide">
+<div class="card hero"><h2>🔎 Buscar Comité</h2>
+<div class="sb"><input id="q" placeholder="Escribe nombre o código del comité y haz clic para abrir su nominal…" autocomplete="off"><div class="sg hide" id="sg"></div></div></div>
+<div class="kp" id="kp"></div>
+<div class="filt" id="ft"></div>
+<div class="gr">
+<div class="card"><h3>Medidores</h3><div id="g7" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-around;text-align:center"></div></div>
+<div class="card"><h3>Comités con más beneficiarios (clic para abrir)</h3><div id="g1"></div></div>
+<div class="card"><h3>Beneficiarios por Estado</h3><div id="g2" class="col"></div></div>
+<div class="card"><h3>Beneficiarios por Vínculo</h3><div id="g3"></div></div>
+<div class="card"><h3>Beneficiarios por Rango de Edad</h3><div id="g4" class="col"></div></div>
+<div class="card"><h3>Beneficiarios por Tipo de Prioridad</h3><div id="g5" class="don"></div></div>
+</div></section>
+</main></div></div>
+
+<div id="mo" class="hide" onclick="if(event.target===this)cerrar()"><div class="md">
+<div class="mh"><h3 id="mt"></h3><div class="mt">
+<input id="ms" placeholder="Buscar DNI o nombre…" oninput="rt()" style="flex:1;min-width:160px">
+<select id="me" onchange="rt()"><option>ACTIVO</option><option>INACTIVO</option><option>ELIMINADO</option><option value="">TODOS</option></select>
+<button class="btn g" onclick="exp(true)">⬇ Excel (seleccionados)</button>
+<button class="btn s" onclick="cerrar()">Cerrar</button></div>
+<div id="mc" style="font-size:12px;color:var(--mu);margin-top:6px"></div></div>
+<div class="tw"><table><thead><tr><th><input type="checkbox" id="ma" onchange="selAll(this.checked)"></th><th>Comité</th><th>DNI</th><th>Nombres y Apellidos</th></tr></thead><tbody id="tb"></tbody></table></div>
+</div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+let D=[],COM=[],F={estado:'ACTIVO',prio:'',edad:'',vin:'',disc:'',desn:''},cur='',rows=[],sel=new Set();
+const AGES=[['0 - 5',0,5],['6 - 12',6,12],['13 - 17',13,17],['18 - 29',18,29],['30 - 59',30,59],['60+',60,999]];
+const norm=s=>(s||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const fmt=n=>n.toLocaleString('es-PE');
+
+function tab(n){$('p1').classList.toggle('hide',n!=1);$('p2').classList.toggle('hide',n!=2);$('b1').classList.toggle('on',n==1);$('b2').classList.toggle('on',n==2);if(n==2)render()}
+
+/* ---------- carga ---------- */
+fi.onchange=e=>e.target.files[0]&&leer(e.target.files[0]);
+dz.ondragover=e=>{e.preventDefault();dz.classList.add('dz')};dz.ondragleave=()=>dz.classList.remove('dz');
+dz.ondrop=e=>{e.preventDefault();dz.classList.remove('dz');e.dataTransfer.files[0]&&leer(e.dataTransfer.files[0])};
+function leer(f){
+  $('st').textContent='Leyendo '+f.name+' … (puede tardar unos segundos)';
+  const r=new FileReader();
+  r.onload=()=>setTimeout(()=>{try{
+    const wb=XLSX.read(r.result,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];
+    let arr=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+    let h=arr.findIndex(x=>x.includes('Nombre Comite'));if(h<0)throw new Error('No se encontró la columna "Nombre Comite"');
+    const H=arr[h],ix=n=>H.indexOf(n);
+    const c={com:ix('Nombre Comite'),pr:ix('Tipo Prioridad'),doc:ix('Nro Doc'),ap:ix('Ape. Paterno'),am:ix('Ape. Materno'),no:ix('Nombres'),
+      es:ix('Estado'),vi:ix('Vinculo'),ed:ix('Edad'),di:ix('¿Persona con Discapacidad?'),ge:ix('¿Gestante y/o Lactante?'),de:ix('¿Padece la Desnutrición?')};
+    const out=[];
+    for(let i=h+1;i<arr.length;i++){const x=arr[i];if(!x[c.com]&&!x[c.doc])continue;
+      out.push({c:String(x[c.com]).trim(),p:String(x[c.pr]).trim(),doc:String(x[c.doc]).trim(),
+        n:[x[c.no],x[c.ap],x[c.am]].map(s=>String(s).trim()).filter(Boolean).join(' '),
+        e:String(x[c.es]).trim().toUpperCase(),v:String(x[c.vi]).trim(),a:parseInt(x[c.ed]),
+        d:String(x[c.di]).trim().toUpperCase()==='SI',g:String(x[c.ge]).trim().toUpperCase()==='SI',s:String(x[c.de]).trim().toUpperCase()==='SI'})}
+    aplicar(out);guardar(out);
+    $('st').textContent='✔ '+fmt(out.length)+' registros cargados desde '+f.name+'.';tab(2);
+  }catch(err){$('st').textContent='Error: '+err.message}},30);
+  r.readAsArrayBuffer(f)}
+function aplicar(o){D=o;const m={};o.forEach(r=>{m[r.c]=1});COM=Object.keys(m).sort();F.estado='ACTIVO';buildFilters()}
+
+/* persistencia (IndexedDB) */
+function idb(){return new Promise((ok,no)=>{const q=indexedDB.open('pvl',1);q.onupgradeneeded=()=>q.result.createObjectStore('d');q.onsuccess=()=>ok(q.result);q.onerror=()=>no()})}
+async function guardar(o){try{const db=await idb();db.transaction('d','readwrite').objectStore('d').put(o,'rows')}catch(e){}}
+async function cargarPrev(){try{const db=await idb();const q=db.transaction('d').objectStore('d').get('rows');q.onsuccess=()=>{if(q.result&&q.result.length){aplicar(q.result);$('st').textContent='Datos anteriores recuperados ('+fmt(q.result.length)+' registros). Sube un Excel nuevo para actualizar.'}}}catch(e){}}
+
+/* ---------- dashboard ---------- */
+function ageIdx(a){return AGES.findIndex(r=>a>=r[1]&&a<=r[2])}
+function pass(r,skip){
+  if(skip!=='estado'&&F.estado&&r.e!==F.estado)return false;
+  if(F.prio&&r.p!==F.prio)return false;
+  if(F.edad!==''&&ageIdx(r.a)!=F.edad)return false;
+  if(F.vin&&(r.v||'(En blanco)')!==F.vin)return false;
+  if(F.disc&&(r.d?'SI':'NO')!==F.disc)return false;
+  if(F.desn&&(r.s?'SI':'NO')!==F.desn)return false;
+  return true}
+function opts(a){return a.map(x=>Array.isArray(x)?`<option value="${x[0]}">${x[1]}</option>`:`<option>${x}</option>`).join('')}
+function buildFilters(){
+  const vin=[...new Set(D.map(r=>r.v||'(En blanco)'))].sort();
+  const defs=[['estado','Estado',[['','Todos'],'ACTIVO','INACTIVO','ELIMINADO']],['prio','Tipo Prioridad',[['','Todas'],'PRIORIDAD 1','PRIORIDAD 2']],
+   ['edad','Edad',[['','Todas'],...AGES.map((a,i)=>[i,a[0]])]],['vin','Vínculo',[['','Todos'],...vin]],
+   ['disc','¿Discapacidad?',[['','Todos'],'SI','NO']],['desn','¿Desnutrición?',[['','Todos'],'SI','NO']]];
+  $('ft').innerHTML=defs.map(d=>`<label>${d[1]}<select id="f_${d[0]}" onchange="F.${d[0]}=this.value;render()">${opts(d[2])}</select></label>`).join('');
+  $('f_estado').value=F.estado}
+function bars(el,obj,max,click){const e=Object.entries(obj).sort((a,b)=>b[1]-a[1]);const m=e.length?e[0][1]:1;
+  el.innerHTML=e.slice(0,max).map(([k,v])=>`<div class="br ${click?'cl':''}" ${click?`onclick="abrir(this.dataset.k)" data-k="${k.replace(/"/g,'&quot;')}"`:''}><div class="l" title="${k}">${k}</div><div class="t"><div class="f" style="width:${v/m*100}%"></div></div><div class="v">${fmt(v)}</div></div>`).join('')||'<small>Sin datos</small>'}
+function cols(el,pairs){const m=Math.max(1,...pairs.map(p=>p[1]));el.innerHTML=pairs.map(([k,v])=>`<div>${fmt(v)}<i style="height:${v/m*80}%"></i>${k}</div>`).join('')}
+function render(){
+  if(!D.length)return;
+  const R=D.filter(r=>pass(r)),A=D.filter(r=>pass(r,'estado'));
+  const cm=new Set(R.map(r=>r.c)).size,p1=R.filter(r=>r.p==='PRIORIDAD 1').length,p2=R.filter(r=>r.p==='PRIORIDAD 2').length;
+  const act=A.filter(r=>r.e==='ACTIVO').length,ina=A.filter(r=>r.e==='INACTIVO').length;
+  const T=R.length||1,dis=R.filter(r=>r.d).length,ges=R.filter(r=>r.g).length,des=R.filter(r=>r.s).length,AL=A.length||1;
+  const kp=[['com','🏘️','Comités',cm,'linear-gradient(135deg,#9b4dff,#5b21b6)',100],['','👥','Beneficiarios',R.length,'linear-gradient(135deg,#0b4a85,#1e90ff)',100],['','🚩','Prioridad 1',p1,'linear-gradient(135deg,#b3202a,#f0545e)',p1/T*100],['','🏳️','Prioridad 2',p2,'linear-gradient(135deg,#c98a00,#e0a800)',p2/T*100],['','✅','Activos',act,'linear-gradient(135deg,#0f9d73,#2cc08f)',act/AL*100],['','⏸️','Inactivos',ina,'linear-gradient(135deg,#8a7b2a,#b3a23c)',ina/AL*100],['','♿','Discapacidad',dis,'linear-gradient(135deg,#d6455d,#f0788c)',dis/T*100],['','🤰','Gest./Lact.',ges,'linear-gradient(135deg,#e1703c,#f09a6c)',ges/T*100],['','⚠️','Desnutrición',des,'linear-gradient(135deg,#e11d48,#fb4a6e)',des/T*100]];
+  $('kp').innerHTML=kp.map(k=>`<div class="k ${k[0]}" style="background:${k[4]}"><i>${k[1]}</i><b data-n="${k[3]}">0</b><span>${k[2]}</span><u><s style="width:${Math.max(2,k[5])}%"></s></u></div>`).join('');
+  document.querySelectorAll('.k b').forEach(el=>{const n=+el.dataset.n,t0=performance.now();(function f(t){const q=Math.min(1,(t-t0)/600);el.textContent=fmt(Math.round(n*q));if(q<1)requestAnimationFrame(f)})(t0)});
+  const bc={};R.forEach(r=>bc[r.c]=(bc[r.c]||0)+1);bars($('g1'),bc,10,true);
+  const es={};A.forEach(r=>es[r.e]=(es[r.e]||0)+1);cols($('g2'),Object.entries(es).sort((a,b)=>b[1]-a[1]));
+  const vi={};R.forEach(r=>{const k=r.v||'(En blanco)';vi[k]=(vi[k]||0)+1});bars($('g3'),vi,12);
+  cols($('g4'),AGES.map((a,i)=>[a[0],R.filter(r=>ageIdx(r.a)===i).length]));
+  const t=R.length||1,a=p1/t*100;
+  const ga=(p,l,c)=>`<div><svg viewBox="0 0 110 66" width="120"><path d="M10 56A45 45 0 0 1 100 56" fill="none" stroke="var(--bd)" stroke-width="10" stroke-linecap="round"/><path d="M10 56A45 45 0 0 1 100 56" fill="none" stroke="${c}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${p*1.414} 200"/><text x="55" y="52" text-anchor="middle" font-size="16" font-weight="800" fill="currentColor">${p.toFixed(1)}%</text></svg><div style="font-size:12px;color:var(--mu)">${l}</div></div>`;
+  $('g7').innerHTML=ga(p1/T*100,'Prioridad 1','#b3202a')+ga(ges/T*100,'Gest./Lact.','#e1703c')+ga(dis/T*100,'Discapacidad','#d6455d')+ga(act/AL*100,'Activos del padrón','#0f9d73');
+  $('g5').innerHTML=`<div class="ring" style="background:conic-gradient(#1a2a9c 0 ${a}%,#e8703a ${a}% 100%)"><span>${fmt(R.length)}<br><small style="font-size:11px">Beneficiarios</small></span></div>
+  <div class="lg"><div><i style="background:#1a2a9c"></i>Prioridad 1: ${fmt(p1)} (${a.toFixed(1)}%)</div><div><i style="background:#e8703a"></i>Prioridad 2: ${fmt(p2)} (${(100-a).toFixed(1)}%)</div></div>`}
+
+/* ---------- buscador comité ---------- */
+$('q').oninput=()=>{const v=norm($('q').value.trim());const sg=$('sg');
+  if(!v||!D.length){sg.classList.add('hide');return}
+  const cnt={};D.forEach(r=>{if(r.e==='ACTIVO')cnt[r.c]=(cnt[r.c]||0)+1});
+  const m=COM.filter(c=>norm(c).includes(v)).slice(0,25);
+  sg.innerHTML=m.map(c=>`<div data-k="${c.replace(/"/g,'&quot;')}" onclick="abrir(this.dataset.k)"><span>${c}</span><small>${fmt(cnt[c]||0)} activos</small></div>`).join('')||'<div>Sin resultados</div>';
+  sg.classList.remove('hide')};
+$('q').onkeydown=e=>{if(e.key==='Enter'){const d=$('sg').querySelector('[data-k]');if(d)abrir(d.dataset.k)}};
+document.addEventListener('click',e=>{if(!e.target.closest('.sb'))$('sg').classList.add('hide')});
+
+/* ---------- nominal ---------- */
+function abrir(c){cur=c;sel=new Set();$('sg').classList.add('hide');$('ms').value='';$('me').value=F.estado;$('mt').textContent='Nominal – '+c;$('mo').classList.remove('hide');rt()}
+function cerrar(){$('mo').classList.add('hide')}
+function rt(){
+  const e=$('me').value,q=norm($('ms').value);
+  rows=D.filter(r=>r.c===cur&&(!e||r.e===e)&&(!q||norm(r.doc+' '+r.n).includes(q)));
+  $('tb').innerHTML=rows.map((r,i)=>`<tr class="${sel.has(i)?'sel':''}"><td><input type="checkbox" ${sel.has(i)?'checked':''} onchange="tg(${i},this.checked)"></td><td>${r.c}</td><td>${r.doc}</td><td>${r.n}</td></tr>`).join('');
+  info()}
+function info(){$('mc').textContent=rows.length+' personas · '+sel.size+' seleccionadas (sin selección se descarga todo lo mostrado)';$('ma').checked=rows.length>0&&sel.size===rows.length}
+function tg(i,v){v?sel.add(i):sel.delete(i);$('tb').children[i].className=v?'sel':'';info()}
+function selAll(v){sel=new Set(v?rows.map((_,i)=>i):[]);rt()}
+async function exp(){
+  const L=sel.size?rows.filter((_,i)=>sel.has(i)):rows;
+  if(!L.length)return alert('No hay registros para descargar.');
+  const ws=XLSX.utils.json_to_sheet(L.map(r=>({'COMITÉ':r.c,'DNI':r.doc,'NOMBRES Y APELLIDOS':r.n})));
+  ws['!cols']=[{wch:38},{wch:12},{wch:44}];
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Nominal');
+  const fn='Nominal_'+cur.replace(/[^\w\-]+/g,'_')+'.xlsx';
+  let dl=null;try{dl=window.claude&&await claude.use('downloads')}catch(e){}
+  if(dl){try{await dl.save({filename:fn,data:new Blob([XLSX.write(wb,{bookType:'xlsx',type:'array'})])})}catch(e){}}
+  else XLSX.writeFile(wb,fn)}
+cargarPrev();
+</script></body></html>
